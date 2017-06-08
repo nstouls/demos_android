@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/activity_main"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.welcoming_machines.macalculatrice.MainActivity">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/screen"
+        android:fontFamily="monospace"
+        android:textAlignment="viewEnd"
+        android:gravity="end"
+        android:textSize="18sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:stretchColumns="*"
+        android:shrinkColumns="*">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button style="@style/DigitBtnStyle" android:text="7" android:id="@+id/btn7" />
+            <Button style="@style/DigitBtnStyle" android:text="8" android:id="@+id/btn8" />
+            <Button style="@style/DigitBtnStyle" android:text="9" android:id="@+id/btn9" />
+
+            <Button
+                android:text="+"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPlus"
+                android:onClick="setOperator" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button style="@style/DigitBtnStyle" android:text="4" android:id="@+id/btn4" />
+            <Button style="@style/DigitBtnStyle" android:text="5" android:id="@+id/btn5" />
+            <Button style="@style/DigitBtnStyle" android:text="6" android:id="@+id/btn6" />
+
+            <Button
+                android:text="-"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnMoins"
+                android:onClick="setOperator" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button style="@style/DigitBtnStyle" android:text="1" android:id="@+id/btn1" />
+            <Button style="@style/DigitBtnStyle" android:text="2" android:id="@+id/btn2" />
+            <Button style="@style/DigitBtnStyle" android:text="3" android:id="@+id/btn3" />
+
+            <Button
+                android:text="*"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnFois"
+                android:onClick="setOperator" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button style="@style/DigitBtnStyle" android:text="0" android:id="@+id/btn0" />
+
+            <Button
+                android:text="="
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:id="@+id/btnEgal" />
+
+            <Button
+                android:text="/"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDiv"
+                android:onClick="setOperator" />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>
