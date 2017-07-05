@@ -17,12 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Morpion">
-            <intent-filter>
-                <action android:name="oc.demos.morpion.START" />
-                <data android:name="oc.demos.morpion.taille" android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Morpion" />
     </application>
 
 </manifest>
