@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void go(int taille) {
-        Log.d("GO", "Taille envoyée : "+taille);
         Intent caller = new Intent(this, oc.demos.morpion.Morpion.class);
         caller.putExtra("oc.demos.morpion.taille", taille);
         startActivity(caller);

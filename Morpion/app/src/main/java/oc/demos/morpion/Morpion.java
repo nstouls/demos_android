@@ -22,6 +22,7 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Récupération du paramètre d'appel
         Intent intent = getIntent();
         taille = intent.getIntExtra("oc.demos.morpion.taille", 20);
 
@@ -34,7 +35,6 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
 
     /** Ajoute un pion en coordonnées (x,y) pour le joueur j.
      *  retourne vrai ssi cet ajout a pu être fait (la case était libre).
-     *  Effet de bord : provoque le raffraichissement de l'affichage du plateau.
      */
     public boolean addPion(int x, int y, boolean j) {
         // On ne peut pas jouer dans une place occupée
@@ -44,11 +44,14 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
 
         // On mémorise le coup
         historique.add(new Pion(x, y, j));
-        plateau.postInvalidate();
         return true;
     }
 
-    /** lorsqu'une touche de l'écran est détectée, un coup est joué si c'est possible. */
+    /** Lorsqu'une touche de l'écran est détectée, un coup est joué si c'est possible.
+     *  Cette méthode provoque également le raffraichissement de l'affichage du plateau
+     *  et le passage au joueur suivant si le coup proposé est valide et que le jeu
+     *  n'est pas fini.
+     * */
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if(motionEvent.getAction()==MotionEvent.ACTION_UP) {
             int x = (int)(motionEvent.getX()*taille/plateau.getWidth());
@@ -60,6 +63,7 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
             }
         }
 
+        plateau.postInvalidate();
         return true;
     }
 
