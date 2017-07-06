@@ -10,6 +10,7 @@ import android.view.View;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class Morpion extends AppCompatActivity implements View.OnTouchListener {
 
     private Plateau plateau;
@@ -17,6 +18,7 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
     private List<Pion> historique = new LinkedList<>();
     private boolean joueurCourant =false;
 
+    public static final String EXTRA_SIZE = "oc.demos.morpion.taille";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
 
         // Récupération du paramètre d'appel
         Intent intent = getIntent();
-        taille = intent.getIntExtra("oc.demos.morpion.taille", 20);
+        taille = intent.getIntExtra(EXTRA_SIZE, 20);
 
         plateau = new Plateau(this, taille, historique);
         setContentView(plateau);
