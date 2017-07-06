@@ -8,7 +8,20 @@ import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 
+import java.util.Random;
+
 public class BoutonPerso extends AppCompatButton {
+    private String sousTitre="Beta";
+    public void setSousTitre(String s) {sousTitre=s;}
+    public void changeCouleurPoint() {
+        Random random= new Random();
+        // Tirage aléatoire d'une couleur et d'une transparence
+        int a = random.nextInt(256);
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        pCercle.setARGB(a, r, g, b) ;
+    }
 
     // 3 constructeurs, qui appellent tous la méthode init().
     public BoutonPerso(Context context) {
@@ -47,6 +60,6 @@ public class BoutonPerso extends AppCompatButton {
     protected void onDraw(Canvas c) {
         super.onDraw(c);
         c.drawCircle(8, 8, 4, pCercle);
-        c.drawText("Beta", getWidth(), getHeight()-pBeta.getTextSize(), pBeta);
+        c.drawText(sousTitre, getWidth(), getHeight()-pBeta.getTextSize(), pBeta);
     }
 }
