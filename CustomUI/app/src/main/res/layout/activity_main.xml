@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pc.demo.customui.MainActivity">
+    tools:context="oc.demos.customui.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,19 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/textView" />
 
-    <oc.demos.customui.BouttonPerso
+    <oc.demos.customui.BoutonPerso
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ceci est un bouton perso"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView" />
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        style="@style/marges"
+        />
 
 
 </android.support.constraint.ConstraintLayout>

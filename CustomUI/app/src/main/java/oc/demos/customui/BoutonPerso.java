@@ -6,21 +6,22 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 
-public class BouttonPerso extends AppCompatButton {
+public class BoutonPerso extends AppCompatButton {
 
     // 3 constructeurs, qui appellent tous la méthode init().
-    public BouttonPerso(Context context) {
+    public BoutonPerso(Context context) {
         super(context);
         init();
     }
 
-    public BouttonPerso(Context context, AttributeSet attrs) {
+    public BoutonPerso(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public BouttonPerso(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BoutonPerso(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -45,7 +46,7 @@ public class BouttonPerso extends AppCompatButton {
     @Override
     protected void onDraw(Canvas c) {
         super.onDraw(c);
-        c.drawCircle(10, 10, 4, pCercle);
-        c.drawText("Béta", getWidth(), getHeight()-pBeta.getTextSize(), pBeta);
+        c.drawCircle(8, 8, 4, pCercle);
+        c.drawText("Beta", getWidth(), getHeight()-pBeta.getTextSize(), pBeta);
     }
 }
