@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.View;
+import android.view.SurfaceView;
 import java.util.List;
 
-public class Plateau extends View {
+public class Plateau extends SurfaceView {
 
     private int taille;
     private Paint crayon;
@@ -15,6 +15,7 @@ public class Plateau extends View {
     private Paint pCroix;
     private Paint pRond;
     private Paint pVainqueur;
+
     private List<Pion> historique;
 
     private int[] solution = null;
@@ -54,9 +55,11 @@ public class Plateau extends View {
         this.historique = historique;
     }
 
+
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        canvas.drawColor(Color.WHITE);
         int w = getWidth();
         int h = getHeight();
         int rayon = Math.min(w,h)/taille/2;

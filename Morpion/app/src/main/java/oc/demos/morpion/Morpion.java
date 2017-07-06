@@ -1,22 +1,25 @@
 package oc.demos.morpion;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
 
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class Morpion extends AppCompatActivity implements View.OnTouchListener {
+public class Morpion extends AppCompatActivity implements View.OnTouchListener, SurfaceHolder.Callback{
 
     private Plateau plateau;
     private int taille;
     private List<Pion> historique = new LinkedList<>();
     private boolean joueurCourant =false;
+    private SurfaceHolder plateauHolder;
 
     public static final String EXTRA_SIZE = "oc.demos.morpion.taille";
 
@@ -30,6 +33,9 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
 
         plateau = new Plateau(this, taille, historique);
         setContentView(plateau);
+
+        // Demande à être notifié du changement d'état de la surface
+        plateau.getHolder().addCallback(this);
 
         plateau.setOnTouchListener(this);
     }
@@ -65,9 +71,14 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
             }
         }
 
-        plateau.postInvalidate();
+        //Pour raffraichir la surface, on lock le canvas, on y dessine, puis on déverrouille.
+        Canvas drawingCanvas = plateauHolder.lockCanvas();
+        plateau.draw(drawingCanvas);
+        plateauHolder.unlockCanvasAndPost(drawingCanvas);
+
         return true;
     }
+
 
 
     /** retourne vrai ssi il existe un pion en (x,y) et qu'il est
@@ -125,5 +136,31 @@ public class Morpion extends AppCompatActivity implements View.OnTouchListener {
         }
 
         return false;
+    }
+
+
+    // ==============================================
+    // Méthodes nécessaire pour le SurfaceHolder.Callback
+    // Les définir est inutile dans cet exemple, car il n'y a pas de processus à lancer/arrêter,
+    // mais on peut exploiter le surfaceCreated pour initialiser l'affichage.
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        plateauHolder = surfaceHolder;
+
+        // On fait un premier affichage
+        Canvas drawingCanvas = plateauHolder.lockCanvas();
+        plateau.draw(drawingCanvas);
+        plateauHolder.unlockCanvasAndPost(drawingCanvas);
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        plateauHolder=null;
     }
 }
