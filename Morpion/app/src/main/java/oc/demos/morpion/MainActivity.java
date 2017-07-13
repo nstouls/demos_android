@@ -3,13 +3,10 @@ package oc.demos.morpion;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar choixTaille;
     private TextView tvTaille;
 
-    private final int MIN = 10;
+    private final int MIN_TAILLE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +25,13 @@ public class MainActivity extends AppCompatActivity {
         choixTaille = (SeekBar) findViewById(R.id.choixTaille);
         startBtn = (Button)findViewById(R.id.startBtn);
 
-        tvTaille.setText((10+MIN)+"x"+(10+MIN));
+        tvTaille.setText((10+ MIN_TAILLE)+"x"+(10+ MIN_TAILLE));
         choixTaille.setProgress(10);
 
         choixTaille.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                int val = choixTaille.getProgress();
-                tvTaille.setText((MIN+val)+"x"+(MIN+val));
+                tvTaille.setText((MIN_TAILLE +i)+"x"+(MIN_TAILLE +i));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int val = choixTaille.getProgress()+MIN;
+                int val = choixTaille.getProgress()+ MIN_TAILLE;
                 go(val);
             }
         });

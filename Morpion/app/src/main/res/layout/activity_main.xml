@@ -15,7 +15,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
-        android:text="Bienvenue dans le morpion stellaire de la mort qui pue !"
+        android:text="Bienvenue dans le super méga morpion de la mort qui tue ! :D"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
