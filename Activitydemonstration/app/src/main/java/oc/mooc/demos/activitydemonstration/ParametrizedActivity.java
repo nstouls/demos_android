@@ -27,19 +27,21 @@ public class ParametrizedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_parametrized);
 
         paramIn = (TextView)findViewById(R.id.paramIn);
+        result = (EditText) findViewById(R.id.result);
+        btnFin = (Button)findViewById(R.id.btnFin);
 
+        // Lecture du paramètre reçu et affichage
         Intent intent = getIntent();
         param = intent.getStringExtra(EXTRA_INPUT);
         paramIn.setText(param);
 
 
-        result = (EditText) findViewById(R.id.result);
 
 
-        btnFin = (Button)findViewById(R.id.btnFin);
         btnFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Génération d'un résultat contenant le texte présent dans l'EditText
                 Intent res = new Intent();
                 res.putExtra(EXTRA_RESULT, result.getText().toString());
                 setResult(Activity.RESULT_OK, res);
@@ -47,7 +49,4 @@ public class ParametrizedActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

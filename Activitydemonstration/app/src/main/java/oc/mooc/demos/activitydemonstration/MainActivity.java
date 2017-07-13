@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Premier bouton : appel explicite
         btnScdActivity = (Button)findViewById(R.id.btnScdActivity);
         btnScdActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // Second bouton : appel implicite vers un browser
         btnExample = (Button)findViewById(R.id.btnExample);
         btnExample.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        // Troisième bouton : appel explicite avec paramètre et résultat
         paramIn = (EditText) findViewById(R.id.paramIn);
         result = (TextView) findViewById(R.id.result);
 
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Méthode appelée en callback suite au retour de l'activité 3.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
