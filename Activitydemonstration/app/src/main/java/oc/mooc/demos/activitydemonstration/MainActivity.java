@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private Button btnScdActivity;
     private Button btnExample;
+    private Button btnMaps;
     private EditText paramIn;
     private TextView result;
     private Button btnParams;
@@ -42,7 +43,19 @@ public class MainActivity extends AppCompatActivity {
         btnExample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.openclassrooms.fr"));
+                Uri myURI = Uri.parse("http://www.openclassrooms.fr");
+                Intent i = new Intent(Intent.ACTION_VIEW, myURI);
+                startActivity(i);
+            }
+        });
+
+        // Appel implicite vers un carte
+        btnMaps = (Button)findViewById(R.id.btnMaps);
+        btnMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri myURI = Uri.parse("geo:0,0?q=20 avenue Albert Einstein, 69100 Villeurbanne, france");
+                Intent i = new Intent(Intent.ACTION_VIEW, myURI);
                 startActivity(i);
             }
         });
