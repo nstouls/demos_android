@@ -1,47 +1,103 @@
 package oc.mooc.demos.sensorsviewer;
 
+import android.content.Intent;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-    private TextView mTextMessage;
-    private TextView tvSensors;
+    private ListView list;
+    private List<Sensor> sensorList;
+    private SensorManager sensorManager ;
+    private HashMap<Integer, float[]> vals;
+    private ThreeValsSensorAdapter adapter;
+    private Timer refresher;
 
-    private SensorManager sm ;
-
-//    private HashMap<Sensor,View>
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, OneSensorActivity.class);
+                startActivity(i);
+            }
+        });
+    }
 
-        sm =  (SensorManager) getSystemService(SENSOR_SERVICE);
-        List<Sensor> msensorList = sm.getSensorList(Sensor.TYPE_ALL);
 
-        tvSensors = (TextView) findViewById(R.id.sensors);
-        String s = msensorList.size()+" capteurs !";
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        // Print each Sensor available using sSensList as the String to be printed
-        Sensor tmp;
-        int x,i;
-        for (i=0;i<msensorList.size();i++){
-            tmp = msensorList.get(i);
-            s+= "\n  "+tmp.getName(); // Add the sensor name to the string of sensors available
+        vals = new HashMap<>();
+        sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
+
+
+        list = (ListView) findViewById(R.id.list);
+        adapter=new ThreeValsSensorAdapter(this, R.layout.three_vals_sensor, sensorList, vals);
+        list.setAdapter(adapter);
+
+
+        for(Sensor s: sensorList) {
+            sensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
         }
-        tvSensors.setText(s);
+
+        refresher = new Timer();
+        refresher.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      if(adapter!=null && vals!=null) adapter.notifyDataSetChanged();
+                                  }
+                              }
+                );
+          }
+        }, 333, 333);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+        vals=null;
+        adapter=null;
+        refresher.cancel();
+        refresher=null;
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+//        Log.d("Sensor", sensorEvent.sensor.getName()+ " -> "+Arrays.toString(sensorEvent.values));
+        vals.put(sensorEvent.sensor.getType(),sensorEvent.values);
+//        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 
 

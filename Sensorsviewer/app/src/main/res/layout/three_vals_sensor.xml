@@ -14,6 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="Sensor name"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +22,9 @@
         android:id="@+id/x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="2dp"
         android:layout_weight="1"
+        style="@style/MySmallText"
         android:text="X : "
         app:layout_constraintTop_toBottomOf="@+id/name"
         android:layout_marginLeft="32dp"
@@ -35,8 +37,8 @@
         android:layout_weight="1"
         android:text="Y : "
         android:layout_marginLeft="0dp"
+        style="@style/MySmallText"
         app:layout_constraintLeft_toLeftOf="@+id/x"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/x" />
 
     <TextView
@@ -46,8 +48,8 @@
         android:layout_weight="1"
         android:text="Z : "
         android:layout_marginLeft="0dp"
+        style="@style/MySmallText"
         app:layout_constraintLeft_toLeftOf="@+id/x"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/y" />
 
     <TextView
@@ -56,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="xValue"
+        style="@style/MySmallText"
         app:layout_constraintBaseline_toBaselineOf="@+id/x"
         app:layout_constraintLeft_toRightOf="@+id/x" />
 
@@ -65,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:text="yValue"
+        style="@style/MySmallText"
         app:layout_constraintBaseline_toBaselineOf="@+id/y"
         app:layout_constraintLeft_toLeftOf="@+id/xValue" />
 
@@ -74,7 +78,38 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:text="zValue"
+        style="@style/MySmallText"
         app:layout_constraintBaseline_toBaselineOf="@+id/z"
         app:layout_constraintLeft_toLeftOf="@+id/yValue" />
 
+
+    <TextView
+        android:id="@+id/xUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="x unit"
+        style="@style/MySmallText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/x"
+        app:layout_constraintLeft_toLeftOf="@+id/xValue" />
+
+    <TextView
+        android:id="@+id/yUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="y unit"
+        style="@style/MySmallText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/y"
+        app:layout_constraintLeft_toLeftOf="@+id/yValue" />
+
+    <TextView
+        android:id="@+id/zUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="z unit"
+        style="@style/MySmallText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/z"
+        app:layout_constraintLeft_toLeftOf="@+id/zValue" />
 </android.support.constraint.ConstraintLayout>
