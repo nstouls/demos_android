@@ -7,12 +7,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private List<Sensor> sensorList;
     private SensorManager sensorManager ;
     private HashMap<Integer, float[]> vals;
-    private ThreeValsSensorAdapter adapter;
+    private FiveValsSensorAdapter adapter;
     private Timer refresher;
 
 
@@ -32,14 +30,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, OneSensorActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
 
@@ -53,8 +43,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         list = (ListView) findViewById(R.id.list);
-        adapter=new ThreeValsSensorAdapter(this, R.layout.three_vals_sensor, sensorList, vals);
+        adapter=new FiveValsSensorAdapter(this, R.layout.five_vals_sensor, sensorList, vals);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
+            {
+                Intent i = new Intent(MainActivity.this, OneSensorActivity.class);
+                i.putExtra(OneSensorActivity.EXTRA_SENSOR_TYPE,sensorList.get(position).getType());
+                startActivity(i);
+            }
+        });
 
 
         for(Sensor s: sensorList) {
@@ -90,17 +90,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-//        Log.d("Sensor", sensorEvent.sensor.getName()+ " -> "+Arrays.toString(sensorEvent.values));
         vals.put(sensorEvent.sensor.getType(),sensorEvent.values);
-//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-
-
-
-
 }

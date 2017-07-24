@@ -1,70 +1,30 @@
 package oc.mooc.demos.sensorsviewer;
 
-import android.content.Context;
 import android.hardware.Sensor;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-public class ThreeValsSensorAdapter extends ArrayAdapter<Sensor> {
-    private int layoutName;
-    private HashMap<Integer, float[]> vals;
+public class GenericSensorsData {
 
-    java.text.DecimalFormat df;
+    private static HashMap<Integer, SensorPlotData> sensors=null;
 
-    public ThreeValsSensorAdapter(Context context, int layoutName, List<Sensor> items, HashMap<Integer, float[]> vals) {
-        super(context, layoutName, items);
-        this.layoutName = layoutName;
-        this.vals=vals;
-        df = new java.text.DecimalFormat("0.0");
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Sensor item = getItem(position);
-        float[] values = vals.get(new Integer(item.getType()));
-        if (item != null) {
-            if(convertView==null) {
-                convertView = LayoutInflater.from(this.getContext()).inflate(layoutName, parent, false);
-            }
-
-            TextView name = (TextView) convertView.findViewById(R.id.name);
-
-            name.setText("Type: "+ sensorTypeToString(item.getType())+" ("+item.getName()+")");
-
-
-            if(values!=null) {
-                if(values.length>0) {
-                    ((TextView) convertView.findViewById(R.id.xValue)).setText("" + df.format(values[0]));
-                    ((TextView) convertView.findViewById(R.id.xUnit)).setText(sensorTypeToUnit(item.getType()));
-                }
-
-                if(values.length>1) {
-                    ((TextView) convertView.findViewById(R.id.yUnit)).setText(sensorTypeToUnit(item.getType()));
-                    ((TextView) convertView.findViewById(R.id.yValue)).setText(""+df.format(values[1]));
-                }
-
-
-                if(values.length>2) {
-                    ((TextView) convertView.findViewById(R.id.zUnit)).setText(sensorTypeToUnit(item.getType()));
-                    ((TextView) convertView.findViewById(R.id.zValue)).setText(""+df.format(values[2]));
-                }
-
-            }
+    public GenericSensorsData () {
+        if(sensors==null) {
+            sensors = new HashMap<>();
+            sensors.put(Sensor.TYPE_ACCELEROMETER, new SensorPlotData(typeToStr(Sensor.TYPE_ACCELEROMETER), typeToUnit(Sensor.TYPE_ACCELEROMETER), -20, 20, -20, 20, -20, 20));
+            sensors.put(Sensor.TYPE_LINEAR_ACCELERATION, new SensorPlotData(typeToStr(Sensor.TYPE_LINEAR_ACCELERATION), typeToUnit(Sensor.TYPE_LINEAR_ACCELERATION), -20, 20, -20, 20, -20, 20));
+            sensors.put(Sensor.TYPE_GRAVITY, new SensorPlotData(typeToStr(Sensor.TYPE_GRAVITY), typeToUnit(Sensor.TYPE_GRAVITY), -13, 13, -13, 13, -13, 13));
+            sensors.put(Sensor.TYPE_GYROSCOPE, new SensorPlotData(typeToStr(Sensor.TYPE_GYROSCOPE), typeToUnit(Sensor.TYPE_GYROSCOPE), -20, 20, -20, 20, -20, 20));
+            sensors.put(Sensor.TYPE_ORIENTATION, new SensorPlotData(typeToStr(Sensor.TYPE_ORIENTATION), typeToUnit(Sensor.TYPE_ORIENTATION), -180, 359, -180, 359, -180, 359));
         }
-
-        return convertView;
     }
 
+    public SensorPlotData getSensorData(int sensorType){
+        if(sensors.containsKey(sensorType)) return sensors.get(sensorType);
+        return new SensorPlotData(typeToStr(sensorType), typeToUnit(sensorType), -20, 20, -20, 20, -20, 20, -20, 20, -20, 20);
+    }
 
-
-
-    public static String sensorTypeToString(int sensorType) {
+    public static String typeToStr(int sensorType) {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 return "Accelerometer";
@@ -119,7 +79,7 @@ public class ThreeValsSensorAdapter extends ArrayAdapter<Sensor> {
 
 
 
-    public static String sensorTypeToUnit(int sensorType) {
+    public static String typeToUnit(int sensorType) {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 return "m/s^2";
@@ -127,7 +87,7 @@ public class ThreeValsSensorAdapter extends ArrayAdapter<Sensor> {
             case Sensor.TYPE_TEMPERATURE:
                 return "°C";
             case Sensor.TYPE_GAME_ROTATION_VECTOR:
-                return "rad/s";
+                return "";
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
                 return "rad/s";
             case Sensor.TYPE_GRAVITY:

@@ -9,12 +9,6 @@
     tools:context="oc.mooc.demos.sensorsviewer.MainActivity">
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lance test de graph..." />
-
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

@@ -1,84 +1,154 @@
 package oc.mooc.demos.sensorsviewer;
 
+import android.content.Intent;
 import android.graphics.*;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
-import com.androidplot.util.PixelUtils;
+import com.androidplot.Plot;
+import com.androidplot.util.Redrawer;
 import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.*;
 
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
-public class OneSensorActivity extends AppCompatActivity {
+public class OneSensorActivity extends AppCompatActivity implements SensorEventListener {
 
+    private SensorManager sensorManager;
 
-    private XYPlot plot;
+    private XYPlot plots[];
+    private SimpleXYSeries series[];
+    private int nbPlots;
+    private int SensorType;
+
+    private Redrawer redrawer;
+
+    public final static String EXTRA_SENSOR_TYPE = "oc.mooc.demos.sensorsviewer.OneSensorActivity.EXTRA_SENSOR_TYPE";
+
+    private static final int HISTORY_SIZE = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_sensor);
 
-        // initialize our XYPlot reference:
-        plot = (XYPlot) findViewById(R.id.plot);
+        // Lecture du paramètre reçu
+        // Input attendu : SensorType
+        // Si pas de paramètre, usage de l'accéléromètre par défaut.
+        Intent intent = getIntent();
+        SensorType = intent.getIntExtra(EXTRA_SENSOR_TYPE,Sensor.TYPE_ACCELEROMETER);
 
-        // create a couple arrays of y-values to plot:
-        final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};
-        Number[] series1Numbers = {1, 4, 2, 8, 4, 16, 8, 32, 16, 64};
-        Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 20, 80, 40};
+        GenericSensorsData sData = new GenericSensorsData();
+        SensorPlotData data = sData.getSensorData(SensorType);
 
-        // turn the above arrays into XYSeries':
-        // (Y_VALS_ONLY means use the element index as the x value)
-        XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
-        XYSeries series2 = new SimpleXYSeries(
-                Arrays.asList(series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
+        Log.d("Used sensor",data.toString());
 
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them:
-        LineAndPointFormatter series1Format =
-                new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
+        nbPlots=data.NB_VALS;
+        String title= data.NAME;
+
+        plots = new XYPlot[nbPlots];
+        series = new SimpleXYSeries[nbPlots];
+
+        // initialize our XYPlot references :
+        XYPlot p = (XYPlot) findViewById(R.id.plotA);
+        plots[0] =p;
+
+        p = (XYPlot) findViewById(R.id.plotB);
+        if(nbPlots>1){ plots[1] = p; } else { p.setVisibility(View.GONE); }
+
+        p = (XYPlot) findViewById(R.id.plotC);
+        if(nbPlots>2){ plots[2] = p; } else { p.setVisibility(View.GONE); }
+
+        p = (XYPlot) findViewById(R.id.plotD);
+        if(nbPlots>3){ plots[3] = p; } else { p.setVisibility(View.GONE); }
+
+        p = (XYPlot) findViewById(R.id.plotE);
+        if(nbPlots>4){ plots[4] = p; } else { p.setVisibility(View.GONE); }
 
 
-        LineAndPointFormatter series2Format =
-                new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
-//                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels_2);
+        plots[0].setTitle(title);
 
-        // add an "dash" effect to the series2 line:
-        series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
+        for(int i=0 ; i<nbPlots ;i++) {
+            series[i]=new SimpleXYSeries(Arrays.asList(new Number[]{0}), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "");
+            series[i].useImplicitXVals();
 
-                // always use DP when specifying pixel sizes, to keep things consistent across devices:
-                PixelUtils.dpToPix(20),
-                PixelUtils.dpToPix(15)}, 0));
+            plots[i].setRangeBoundaries(data.MINS[i], data.MAXS[i], BoundaryMode.FIXED);
+            plots[i].setDomainStepMode(StepMode.INCREMENT_BY_VAL);
+            plots[i].setDomainBoundaries(0, HISTORY_SIZE, BoundaryMode.FIXED);
+            plots[i].setDomainStepValue(HISTORY_SIZE/10);
+            plots[i].setDomainLabel("");
+            plots[i].getDomainTitle().pack();
+            plots[i].setRangeLabel(data.UNIT);
+            plots[i].getRangeTitle().pack();
+            plots[i].getGraph().getLineLabelStyle(XYGraphWidget.Edge.LEFT).setFormat(new DecimalFormat("#"));
+            plots[i].getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new DecimalFormat("#"));
 
-        // just for fun, add some smoothing to the lines:
-        // see: http://androidplot.com/smooth-curves-and-androidplot/
-        series1Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
+            LineAndPointFormatter fX = new LineAndPointFormatter(Color.rgb(100, 100, 200), null, null, null);
+            fX.setLegendIconEnabled(false);
+            plots[i].addSeries(series[i], fX);
+        }
 
-        series2Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
-        // add a new series' to the xyplot:
-        plot.addSeries(series1, series1Format);
-        plot.addSeries(series2, series2Format);
+        redrawer = new Redrawer(Arrays.asList((Plot[])plots), 100, false);
+    }
 
-        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
-            @Override
-            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-                int i = Math.round(((Number) obj).floatValue());
-                return toAppendTo.append(domainLabels[i]);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(SensorType), SensorManager.SENSOR_DELAY_FASTEST);
+
+
+        redrawer.start();
+    }
+
+
+    @Override
+    protected void onPause() {
+        redrawer.pause();
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        redrawer.finish();
+        super.onDestroy();
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+//        Log.d("OneSensor", sensorEvent.sensor.getName()+ " -> "+Arrays.toString(sensorEvent.values));
+
+//        Log.d("xValues.size : ", ""+series[0].size());
+        if (series[0].size() >= HISTORY_SIZE) {
+            for(int i=0;i<nbPlots ;i++) {
+                if(sensorEvent.values.length>i) {
+                    series[i].removeFirst();
+                }
             }
-            @Override
-            public Object parseObject(String source, ParsePosition pos) {
-                return null;
+        }
+
+        for(int i=0;i<nbPlots ;i++) {
+            if(sensorEvent.values.length>i) {
+                series[i].addLast(null, sensorEvent.values[i]);
             }
-        });
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 
 }
