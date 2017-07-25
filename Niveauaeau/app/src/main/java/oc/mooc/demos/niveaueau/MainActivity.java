@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void onSensorChanged(SensorEvent event) {
-        tvDeltaX.setText(""+(int)(event.values[0]*100/SensorManager.GRAVITY_EARTH)+"%");
-        tvDeltaY.setText(""+(int)(event.values[1]*100/SensorManager.GRAVITY_EARTH)+"%");
+        tvDeltaX.setText((int)(event.values[0]*100/SensorManager.GRAVITY_EARTH)+"%");
+        tvDeltaY.setText((int)(event.values[1]*100/SensorManager.GRAVITY_EARTH)+"%");
     }
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
