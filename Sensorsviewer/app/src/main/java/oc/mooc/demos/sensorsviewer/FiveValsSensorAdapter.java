@@ -34,7 +34,7 @@ public class FiveValsSensorAdapter extends ArrayAdapter<Sensor> {
 
             TextView name = (TextView) convertView.findViewById(R.id.name);
 
-            name.setText("Type: "+ GenericSensorsData.typeToStr(item.getType())+" ("+item.getName()+")");
+            name.setText("Type: "+ GenericSensorsData.typeToStr(item.getType())+" ("+item.getName()+" / precision "+item.getResolution()+")");
 
 
             if(values!=null) {
