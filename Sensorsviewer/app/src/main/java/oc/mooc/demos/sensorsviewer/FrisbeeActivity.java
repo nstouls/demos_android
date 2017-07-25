@@ -1,6 +1,5 @@
 package oc.mooc.demos.sensorsviewer;
 
-import android.drm.DrmManagerClient;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,8 +7,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.androidplot.Plot;
@@ -31,7 +28,11 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
     private SimpleXYSeries series[];
     private final int NB_PLOTS =2;
     private final int ACC_MODULE=0;
-    private final int GYRO=1;
+    private final int LIGHT_GYRO =1;
+    private final int LIGHT_FIELD =0;
+    private final int GYRO_FIELD =2;
+    private boolean isGyro=true;
+
 
     private Redrawer redrawer;
 
@@ -43,14 +44,14 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
         setContentView(R.layout.activity_frisbee);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        String title= "Mode frisbee";
+        String title= "Mode frisbee aquatique";
 
         plots = new XYPlot[NB_PLOTS];
         series = new SimpleXYSeries[NB_PLOTS];
 
         // initialize our XYPlot references :
         plots[ACC_MODULE] =(XYPlot) findViewById(R.id.plotA);
-        plots[GYRO] =(XYPlot) findViewById(R.id.plotB);
+        plots[LIGHT_GYRO] =(XYPlot) findViewById(R.id.plotB);
 
 
         plots[0].setTitle(title);
@@ -75,13 +76,13 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
         f.setLegendIconEnabled(false);
         plots[ACC_MODULE].addSeries(series[ACC_MODULE], f);
 
-        plots[GYRO].setDomainLabel("Gyroscope sur l'axe vertical");
-        plots[GYRO].getDomainTitle().pack();
-        plots[GYRO].setRangeLabel("rad/s");
-        plots[GYRO].getRangeTitle().pack();
+        plots[LIGHT_GYRO].setDomainLabel("Gyroscope");
+        plots[LIGHT_GYRO].getDomainTitle().pack();
+        plots[LIGHT_GYRO].setRangeLabel("rad/s");
+        plots[LIGHT_GYRO].getRangeTitle().pack();
         f = new LineAndPointFormatter(Color.rgb(200, 100, 100), null, null, null);
         f.setLegendIconEnabled(false);
-        plots[GYRO].addSeries(series[GYRO], f);
+        plots[LIGHT_GYRO].addSeries(series[LIGHT_GYRO], f);
 
 
         redrawer = new Redrawer(Arrays.asList((Plot[])plots), 100, false);
@@ -94,7 +95,17 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_FASTEST);
+        // En second capteur, si on ne trouve pas de gyroscope, alors on prend un capteur de luminosité.
+        Sensor s = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        if(s==null) {
+            isGyro=false;
+            s=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+            plots[LIGHT_GYRO].setDomainLabel("Luminosité");
+            plots[LIGHT_GYRO].getDomainTitle().pack();
+            plots[LIGHT_GYRO].setRangeLabel("lux");
+            plots[LIGHT_GYRO].getRangeTitle().pack();
+        }
+        sensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_FASTEST);
 
         redrawer.start();
     }
@@ -116,8 +127,12 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        int sensorID = GYRO;
-        double val = event.values[2];
+        int sensorID = LIGHT_GYRO;
+        double val = event.values[GYRO_FIELD];
+        if(!isGyro)  {
+            val = event.values[LIGHT_FIELD];
+        }
+
         if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER) {
             sensorID=ACC_MODULE;
             val = Math.sqrt(
@@ -127,9 +142,6 @@ public class FrisbeeActivity extends AppCompatActivity implements SensorEventLis
             );
         }
 
-//        Log.d("OneSensor", sensorEvent.sensor.getName()+ " -> "+Arrays.toString(sensorEvent.values));
-
-//        Log.d("xValues.size : ", ""+series[0].size());
         if (series[sensorID].size() >= HISTORY_SIZE) {
             series[sensorID].removeFirst();
         }
