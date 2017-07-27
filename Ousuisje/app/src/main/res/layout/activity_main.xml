@@ -1,187 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context="oc.mooc.demos.ou_suis_je.MainActivity">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="serif"
-        android:text="API Android"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnAndroidGetLastLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Dernière position connue"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/tvAndroidLastLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnAndroidGetLastLocation"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidGetLastLocation" />
-
-    <Button
-        android:id="@+id/btnAndroidGetGeo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="C'est où ?"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvAndroidLastLocation"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/btnAndroidGetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
-        android:text="Où suis-je ?"
-        app:layout_constraintLeft_toLeftOf="@+id/btnAndroidGetLastLocation"
-        app:layout_constraintTop_toBottomOf="@+id/btnAndroidGetLastLocation" />
-
-    <TextView
-        android:id="@+id/tvAndroidGetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnAndroidGetLocation"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidGetLocation" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="serif"
+            android:text="API Android"
+            android:textAllCaps="false"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAndroidUpdateLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
-        android:text="Suis moi."
-        app:layout_constraintLeft_toLeftOf="@+id/btnAndroidGetLocation"
-        app:layout_constraintTop_toBottomOf="@+id/btnAndroidGetLocation" />
+        <Button
+            android:id="@+id/btnAndroidGetLastLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Dernière position connue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/tvAndroidUpdateLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnAndroidUpdateLocation"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidUpdateLocation" />
+        <TextView
+            android:id="@+id/tvAndroidLastLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnAndroidGetLastLocation"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidGetLastLocation" />
+
+        <Button
+            android:id="@+id/btnAndroidGetGeo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C'est où ?"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvAndroidLastLocation"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btnAndroidGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Où suis-je ?"
+            app:layout_constraintLeft_toLeftOf="@+id/btnAndroidGetLastLocation"
+            app:layout_constraintTop_toBottomOf="@+id/btnAndroidGetLastLocation" />
+
+        <TextView
+            android:id="@+id/tvAndroidGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnAndroidGetLocation"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidGetLocation" />
 
 
 
+        <Button
+            android:id="@+id/btnAndroidUpdateLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Suis moi."
+            app:layout_constraintLeft_toLeftOf="@+id/btnAndroidGetLocation"
+            app:layout_constraintTop_toBottomOf="@+id/btnAndroidGetLocation" />
 
-
-
+        <TextView
+            android:id="@+id/tvAndroidUpdateLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnAndroidUpdateLocation"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnAndroidUpdateLocation" />
 
 
 
 
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="serif"
-        android:text="API Google Play Services"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/btnAndroidUpdateLocation"
-        />
 
 
-    <Button
-        android:id="@+id/btnGPSGetLastLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Dernière position connue"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/tvGPSLastLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnGPSGetLastLocation"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSGetLastLocation" />
-
-    <Button
-        android:id="@+id/btnGPSGetGeo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="C'est où ?"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvGPSLastLocation"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/btnGPSGetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
-        android:text="Où suis-je ?"
-        app:layout_constraintLeft_toLeftOf="@+id/btnGPSGetLastLocation"
-        app:layout_constraintTop_toBottomOf="@+id/btnGPSGetLastLocation" />
-
-    <TextView
-        android:id="@+id/tvGPSGetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnGPSGetLocation"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSGetLocation" />
-
-    <Button
-        android:id="@+id/btnGPSUpdateLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
-        android:text="Suis moi."
-        app:layout_constraintLeft_toLeftOf="@+id/btnGPSGetLocation"
-        app:layout_constraintTop_toBottomOf="@+id/btnGPSGetLocation" />
-
-    <TextView
-        android:id="@+id/tvGPSUpdateLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="Lat : ? / Long : ?"
-        app:layout_constraintLeft_toRightOf="@+id/btnGPSUpdateLocation"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSUpdateLocation" />
 
 
-</android.support.constraint.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="serif"
+            android:text="API Google Play Services"
+            android:textAllCaps="false"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/btnAndroidUpdateLocation"
+            />
+
+
+        <Button
+            android:id="@+id/btnGPSGetLastLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Dernière position connue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/tvGPSLastLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnGPSGetLastLocation"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSGetLastLocation" />
+
+        <Button
+            android:id="@+id/btnGPSGetGeo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C'est où ?"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvGPSLastLocation"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btnGPSGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Où suis-je ?"
+            app:layout_constraintLeft_toLeftOf="@+id/btnGPSGetLastLocation"
+            app:layout_constraintTop_toBottomOf="@+id/btnGPSGetLastLocation" />
+
+        <TextView
+            android:id="@+id/tvGPSGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnGPSGetLocation"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSGetLocation" />
+
+        <Button
+            android:id="@+id/btnGPSUpdateLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Suis moi."
+            app:layout_constraintLeft_toLeftOf="@+id/btnGPSGetLocation"
+            app:layout_constraintTop_toBottomOf="@+id/btnGPSGetLocation" />
+
+        <TextView
+            android:id="@+id/tvGPSUpdateLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Lat : ? / Long : ?"
+            app:layout_constraintLeft_toRightOf="@+id/btnGPSUpdateLocation"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnGPSUpdateLocation" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

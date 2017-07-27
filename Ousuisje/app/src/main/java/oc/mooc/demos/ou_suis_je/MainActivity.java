@@ -1,9 +1,12 @@
 package oc.mooc.demos.ou_suis_je;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvAndroidUpdateLocation;
     private Location AndroidLocation = null;
     private boolean isAndroidUpdating=false;
+    LocationManager androidLocationManager;
+    LocationListener androidLocationListener;
+
     final static int REQUEST_CODE_ANDROID_LAST_LOCATION=1;
     final static int REQUEST_CODE_ANDROID_GET_LOCATION=2;
     final static int REQUEST_CODE_ANDROID_UPDATE_LOCATION=3;
@@ -57,11 +63,8 @@ public class MainActivity extends AppCompatActivity {
     final static int REQUEST_CODE_GPS_GET_LOCATION=5;
     final static int REQUEST_CODE_GPS_UPDATE_LOCATION=6;
 
-
-
     // Shared attributes
-    final static String MY_PERMISSION=Manifest.permission.ACCESS_FINE_LOCATION;
-
+    private String MY_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,19 +86,19 @@ public class MainActivity extends AppCompatActivity {
         btnAndroidGetLastLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //androidGetLastLocation();
+                androidGetLastLocation();
             }
         });
         btnAndroidGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //androidGetLocation();
+                androidGetLocation();
             }
         });
         btnAndroidUpdateLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //androidUpdateLocation();
+                androidUpdateLocation();
             }
         });
 
@@ -161,7 +164,119 @@ public class MainActivity extends AppCompatActivity {
         // ================================ end of onCreate ================================
     }
 
+
+
+
+
+
+
+
+
+
+
     // ============================ Android location API methods ===========================
+
+
+
+    public void androidGetLastLocation(){
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{MY_PERMISSION},
+                    REQUEST_CODE_ANDROID_LAST_LOCATION);
+
+        } else {
+            androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            Location loc = androidLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(loc==null) {
+                Toast.makeText(MainActivity.this, "Pas de localisation disponible", Toast.LENGTH_LONG).show();
+            } else {
+                AndroidLocation = publishLocation(loc, tvAndroidLastLocation, "Et hop ! Une géoloc gratuite ! :D");
+            }
+        }
+    }
+
+
+    public void androidGetLocation(){
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{MY_PERMISSION},
+                    REQUEST_CODE_ANDROID_GET_LOCATION);
+
+        } else {
+            androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+            androidLocationListener = new LocationListener() {
+                public void onLocationChanged(Location locationResult) {
+                    publishLocation(locationResult, tvAndroidGetLocation, null);
+                }
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+                public void onProviderEnabled(String provider) {}
+                public void onProviderDisabled(String provider) {}
+            };
+
+            // Register the listener with the Location Manager to receive location updates
+            androidLocationManager.requestSingleUpdate(
+                    LocationManager.NETWORK_PROVIDER,
+                    androidLocationListener,
+                    null);
+        }
+    }
+    public void androidUpdateLocation(){
+        if(isAndroidUpdating) {
+            androidUpdateLocationStop();
+        } else {
+
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{MY_PERMISSION},
+                        REQUEST_CODE_ANDROID_UPDATE_LOCATION);
+
+            } else {
+
+                androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+                androidLocationListener = new LocationListener() {
+                    public void onLocationChanged(Location locationResult) {
+                        publishLocation(locationResult, tvAndroidUpdateLocation, null);
+                    }
+                    public void onStatusChanged(String provider, int status, Bundle extras) {}
+                    public void onProviderEnabled(String provider) {}
+                    public void onProviderDisabled(String provider) {}
+                };
+
+                // Register the listener with the Location Manager to receive location updates
+                androidLocationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        1000, // in milliseconds
+                        50, // in meters
+                        androidLocationListener);
+                btnAndroidUpdateLocation.setText("Stop");
+                isAndroidUpdating=true;
+            }
+        }
+    }
+
+
+    public void androidUpdateLocationStop(){
+        isAndroidUpdating=false;
+        btnAndroidUpdateLocation.setText("Suis moi.");
+        if(androidLocationListener!=null) {
+            if (androidLocationManager == null) {
+                androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            }
+            androidLocationManager.removeUpdates(androidLocationListener);
+            androidLocationManager=null;
+            androidLocationListener=null;
+        }
+    }
+
+
 
 
 
@@ -172,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void GPSGetLastLocation(){
         if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
             ActivityCompat.requestPermissions(
                     MainActivity.this,
                     new String[]{MY_PERMISSION},
@@ -207,32 +323,33 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions(
                         MainActivity.this,
                         new String[]{MY_PERMISSION},
                         REQUEST_CODE_GPS_UPDATE_LOCATION);
 
             } else {
-
-                isGPSUpdating=true;
-                btnGPSUpdateLocation.setText("stop");
-
                 GPSLocationCallback= new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
-                        publishLocation(locationResult.getLastLocation(), tvGPSUpdateLocation, null);
+                        publishLocation(locationResult.getLastLocation(), tvGPSUpdateLocation, "Nb locs : "+locationResult.getLocations().size());
                     }
                 };
 
                 LocationRequest locationRequest = new LocationRequest();
                 locationRequest.setInterval(10000);
                 locationRequest.setFastestInterval(5000);
+                locationRequest.setSmallestDisplacement(50); // en mètres
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
                 GPSLocationClient.requestLocationUpdates(
                         locationRequest,
                         GPSLocationCallback,
                         null /* Looper */);
+
+                isGPSUpdating=true;
+                btnGPSUpdateLocation.setText("Stop");
             }
         }
     }
@@ -253,18 +370,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     // ================================= Shared methods =================================
 
     protected void onPause() {
         super.onPause();
         GPSUpdateLocationStop();
-        //AndroidUpdateLocationStop();
+        androidUpdateLocationStop();
     }
 
 
     private Location publishLocation(Location loc, TextView tv, String msg) {
         if(loc != null ){
-            tv.setText("Lat : "+loc.getLatitude()+" / Long : "+loc.getLongitude()+" (Précision : "+loc.getAccuracy()+")");
+            tv.setText("Lat : "+loc.getLatitude()+" / Long : "+loc.getLongitude()+" (Provider: "+loc.getProvider()+")");
             if(msg!=null) {
                 Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
             }
@@ -276,8 +395,11 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             switch (requestCode) {
+                case REQUEST_CODE_ANDROID_LAST_LOCATION:   androidGetLastLocation(); return;
+                case REQUEST_CODE_ANDROID_GET_LOCATION:    androidGetLocation();     return;// Cas impossible
+                case REQUEST_CODE_ANDROID_UPDATE_LOCATION: androidUpdateLocation();  return;
                 case REQUEST_CODE_GPS_LAST_LOCATION:   GPSGetLastLocation(); return;
-                case REQUEST_CODE_GPS_GET_LOCATION:    GPSGetLocation();     return;
+                case REQUEST_CODE_GPS_GET_LOCATION:    GPSGetLocation();     return;// Cas impossible
                 case REQUEST_CODE_GPS_UPDATE_LOCATION: GPSUpdateLocation();  return;
 
             }
