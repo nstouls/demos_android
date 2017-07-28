@@ -60,9 +60,6 @@ public class BoutonPerso extends AppCompatButton {
     @Override
     protected void onDraw(Canvas c) {
         super.onDraw(c);
-        Drawable d = getResources().getDrawable(android.R.drawable.btn_star_big_on);
-        d.setBounds(0,getHeight()-30,30,getHeight());
-        d.draw(c);
 
         c.drawCircle(8, 8, 4, pCercle);
         c.drawText(sousTitre, getWidth(), getHeight()-pBeta.getTextSize(), pBeta);
