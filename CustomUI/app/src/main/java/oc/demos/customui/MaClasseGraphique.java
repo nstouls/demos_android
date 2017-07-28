@@ -5,54 +5,49 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class MaClasseGraphique extends View {
-    private Paint crayonTrait;
-    private Paint crayonRect;
-    private Paint crayonTexte;
+/**
+ * Created by nstouls on 28/07/2017.
+ */
 
-    // Code visant une API 17, donc avec seulement 3 constructeurs définis
+public class MaClasseGraphique extends View {
     public MaClasseGraphique(Context context) {
         super(context);
         init();
     }
 
-    public MaClasseGraphique(Context context, AttributeSet attrs) {
+    public MaClasseGraphique(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MaClasseGraphique(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaClasseGraphique(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-
-    private void init(){
-        // Exemple de crayon si on voulait dessiner un trait jaune
-        crayonTrait = new Paint();
-        crayonTrait.setColor(Color.RED);
-        crayonTrait.setAntiAlias(true);  // Faire de l'anti-aliasing
-
-        // Exemple de crayon si on voulait dessiner un rectangle noir plein
-        crayonRect = new Paint();
+    private Paint crayonRect = new Paint();
+    private Paint crayonDisque= new Paint();
+    Drawable etoile;
+    public void init(){
         crayonRect.setColor(Color.BLACK);
         crayonRect.setStyle(Paint.Style.FILL);
-
-        // Chargement de l'image et configuration de sa position
+        crayonDisque.setColor(Color.RED);
+        crayonDisque.setStyle(Paint.Style.FILL);
         etoile = getResources().getDrawable(android.R.drawable.btn_star_big_on);
-        etoile.setBounds(60,10,90,40);
+        etoile.setBounds(200,200,300,300);
     }
 
-    private Drawable etoile;
+
     @Override
-    protected void onDraw(Canvas canvas){
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(0,0,20,20,crayonRect);
-        canvas.drawLine(0,0,getWidth(), getHeight(),crayonTrait);
-
+        canvas.drawRect(0,0,100,50,crayonRect);
+        canvas.drawCircle(100,100,60,crayonDisque);
         etoile.draw(canvas);
     }
 }
+
