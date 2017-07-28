@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Timer refresher;
     private Button btnFrisbee ;
     private Button btnAccComp ;
-
+    private Button btnLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, AccelerometersComparison.class);
+                startActivity(i);
+            }
+        });
+
+        btnLight = (Button)findViewById(R.id.btnLight);
+        btnLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, LightDemo.class);
                 startActivity(i);
             }
         });
