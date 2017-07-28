@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".OneSensorActivity" />
-        <activity android:name=".FrisbeeActivity"></activity>
+        <activity android:name=".FrisbeeActivity" />
+        <activity android:name=".AccelerometersComparison" />
     </application>
 
 </manifest>

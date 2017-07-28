@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private FiveValsSensorAdapter adapter;
     private Timer refresher;
     private Button btnFrisbee ;
+    private Button btnAccComp ;
 
 
     @Override
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, FrisbeeActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnAccComp = (Button)findViewById(R.id.btnAccComp);
+        btnAccComp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, AccelerometersComparison.class);
                 startActivity(i);
             }
         });

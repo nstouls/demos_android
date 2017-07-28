@@ -81,7 +81,7 @@ public class OneSensorActivity extends AppCompatActivity implements SensorEventL
             series[i]=new SimpleXYSeries(Arrays.asList(new Number[]{0}), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "");
             series[i].useImplicitXVals();
 
-            plots[i].setRangeBoundaries(data.MINS[i], data.MAXS[i], BoundaryMode.FIXED);
+            plots[i].setRangeBoundaries(data.MINS[i], data.MAXS[i], BoundaryMode.AUTO);
             plots[i].setDomainStepMode(StepMode.INCREMENT_BY_VAL);
             plots[i].setDomainBoundaries(0, HISTORY_SIZE, BoundaryMode.FIXED);
             plots[i].setDomainStepValue(HISTORY_SIZE/10);
