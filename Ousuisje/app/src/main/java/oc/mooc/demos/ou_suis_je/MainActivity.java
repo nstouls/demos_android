@@ -180,12 +180,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void androidGetLastLocation(){
         if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{MY_PERMISSION},
-                    REQUEST_CODE_ANDROID_LAST_LOCATION);
-
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,MY_PERMISSION)) {
+                Toast.makeText(MainActivity.this, "Permission nécessaire avait déjà été refusée.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{MY_PERMISSION},
+                        REQUEST_CODE_ANDROID_LAST_LOCATION);
+            }
         } else {
             androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             Location loc = androidLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -200,12 +203,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void androidGetLocation(){
         if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{MY_PERMISSION},
-                    REQUEST_CODE_ANDROID_GET_LOCATION);
-
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,MY_PERMISSION)) {
+                Toast.makeText(MainActivity.this, "Permission nécessaire avait déjà été refusée.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{MY_PERMISSION},
+                        REQUEST_CODE_ANDROID_GET_LOCATION);
+            }
         } else {
             androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -231,12 +237,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
-                ActivityCompat.requestPermissions(
-                        MainActivity.this,
-                        new String[]{MY_PERMISSION},
-                        REQUEST_CODE_ANDROID_UPDATE_LOCATION);
-
+                if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,MY_PERMISSION)) {
+                    Toast.makeText(MainActivity.this, "Permission nécessaire avait déjà été refusée.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                    ActivityCompat.requestPermissions(
+                            MainActivity.this,
+                            new String[]{MY_PERMISSION},
+                            REQUEST_CODE_ANDROID_UPDATE_LOCATION);
+                }
             } else {
 
                 androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -287,12 +296,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void GPSGetLastLocation(){
         if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{MY_PERMISSION},
-                    REQUEST_CODE_GPS_LAST_LOCATION);
-
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,MY_PERMISSION)) {
+                Toast.makeText(MainActivity.this, "Permission nécessaire avait déjà été refusée.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{MY_PERMISSION},
+                        REQUEST_CODE_GPS_LAST_LOCATION);
+            }
         } else {
             FusedLocationProviderClient locationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
             Task<Location> t = locationClient.getLastLocation();
@@ -323,12 +335,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             if (ActivityCompat.checkSelfPermission(MainActivity.this, MY_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
-                ActivityCompat.requestPermissions(
-                        MainActivity.this,
-                        new String[]{MY_PERMISSION},
-                        REQUEST_CODE_GPS_UPDATE_LOCATION);
-
+/*                if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,MY_PERMISSION)) {
+                    Toast.makeText(MainActivity.this, "Permission nécessaire avait déjà été refusée.", Toast.LENGTH_LONG).show();
+                } else {
+*/
+                    Toast.makeText(MainActivity.this, "Demande de permission lancée.", Toast.LENGTH_LONG).show();
+                    ActivityCompat.requestPermissions(
+                            MainActivity.this,
+                            new String[]{MY_PERMISSION},
+                            REQUEST_CODE_GPS_UPDATE_LOCATION);
+//                }
             } else {
                 GPSLocationCallback= new LocationCallback() {
                     @Override
@@ -392,11 +408,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[],
+                                           int[] grantResults) {
+
+        if (grantResults.length > 0 &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
             switch (requestCode) {
                 case REQUEST_CODE_ANDROID_LAST_LOCATION:   androidGetLastLocation(); return;
-                case REQUEST_CODE_ANDROID_GET_LOCATION:    androidGetLocation();     return;// Cas impossible
+                case REQUEST_CODE_ANDROID_GET_LOCATION:    androidGetLocation();     return;
                 case REQUEST_CODE_ANDROID_UPDATE_LOCATION: androidUpdateLocation();  return;
                 case REQUEST_CODE_GPS_LAST_LOCATION:   GPSGetLastLocation(); return;
                 case REQUEST_CODE_GPS_GET_LOCATION:    GPSGetLocation();     return;// Cas impossible
@@ -407,5 +428,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Permission refusée.", Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
 

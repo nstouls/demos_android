@@ -3,7 +3,7 @@
     package="oc.mooc.demos.ou_suis_je">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
