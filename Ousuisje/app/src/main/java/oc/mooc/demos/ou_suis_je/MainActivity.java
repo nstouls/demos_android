@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         btnAndroidUpdateLocation.setText("Suis moi.");
         if(androidLocationListener!=null) {
             if (androidLocationManager == null) {
-                androidLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+                androidLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             }
             androidLocationManager.removeUpdates(androidLocationListener);
             androidLocationManager=null;
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
                 LocationRequest locationRequest = new LocationRequest();
                 locationRequest.setInterval(10000);
-                locationRequest.setFastestInterval(5000);
+                locationRequest.setFastestInterval(5000);    // en millisecondes
                 locationRequest.setSmallestDisplacement(50); // en mètres
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
