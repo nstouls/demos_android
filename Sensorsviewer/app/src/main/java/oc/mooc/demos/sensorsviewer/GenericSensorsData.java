@@ -14,7 +14,7 @@ public class GenericSensorsData {
             sensors.put(Sensor.TYPE_ACCELEROMETER, new SensorPlotData(typeToStr(Sensor.TYPE_ACCELEROMETER), typeToUnit(Sensor.TYPE_ACCELEROMETER), -20, 20, -20, 20, -20, 20));
             sensors.put(Sensor.TYPE_LINEAR_ACCELERATION, new SensorPlotData(typeToStr(Sensor.TYPE_LINEAR_ACCELERATION), typeToUnit(Sensor.TYPE_LINEAR_ACCELERATION), -20, 20, -20, 20, -20, 20));
             sensors.put(Sensor.TYPE_GRAVITY, new SensorPlotData(typeToStr(Sensor.TYPE_GRAVITY), typeToUnit(Sensor.TYPE_GRAVITY), -13, 13, -13, 13, -13, 13));
-            sensors.put(Sensor.TYPE_GYROSCOPE, new SensorPlotData(typeToStr(Sensor.TYPE_GYROSCOPE), typeToUnit(Sensor.TYPE_GYROSCOPE), -20, 20, -20, 20, -20, 20));
+            sensors.put(Sensor.TYPE_GYROSCOPE, new SensorPlotData(typeToStr(Sensor.TYPE_GYROSCOPE), typeToUnit(Sensor.TYPE_GYROSCOPE), -6, 6, -6, 6, -6, 6));
             sensors.put(Sensor.TYPE_ORIENTATION, new SensorPlotData(typeToStr(Sensor.TYPE_ORIENTATION), typeToUnit(Sensor.TYPE_ORIENTATION), -180, 359, -180, 359, -180, 359));
             sensors.put(Sensor.TYPE_LIGHT, new SensorPlotData(typeToStr(Sensor.TYPE_LIGHT), typeToUnit(Sensor.TYPE_LIGHT), 0, 300));
         }

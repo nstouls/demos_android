@@ -34,6 +34,7 @@ public class LightDemo extends AppCompatActivity implements SensorEventListener 
     private SimpleXYSeries series[];
     private final int NB_PLOTS =1;
     private TextView tvSpeech;
+    private int SEUIL = 2000;
 
 
     private Redrawer redrawer;
@@ -138,7 +139,7 @@ public class LightDemo extends AppCompatActivity implements SensorEventListener 
 
         count= (count+1)%11;
         if(count==0) {
-            if(event.values[0]>100) {
+            if(event.values[0]>SEUIL) {
                 if(!wasCoupable) {
                     messages=new LinkedList<>();
                 }
