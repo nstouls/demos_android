@@ -95,7 +95,6 @@
                 android:text="="
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_span="2"
                 android:id="@+id/btnEgal" />
 
             <Button
@@ -104,6 +103,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnDiv"
                 android:onClick="setOperator" />
+
+            <Button
+                android:text="C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnClear" />
         </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
