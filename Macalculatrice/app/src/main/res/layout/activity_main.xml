@@ -27,88 +27,128 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:stretchColumns="*"
-        android:shrinkColumns="*"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <Button style="@style/DigitBtnStyle" android:text="7" android:id="@+id/btn7" />
-            <Button style="@style/DigitBtnStyle" android:text="8" android:id="@+id/btn8" />
-            <Button style="@style/DigitBtnStyle" android:text="9" android:id="@+id/btn9" />
+            android:layout_height="match_parent">
 
             <Button
-                android:text="+"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn7"
+                style="@style/DigitBtnStyle"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/btn8"
+                style="@style/DigitBtnStyle"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/btn9"
+                style="@style/DigitBtnStyle"
+                android:text="9" />
+
+            <Button
                 android:id="@+id/btnPlus"
-                android:onClick="setOperator" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setOperator"
+                android:text="+" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <Button style="@style/DigitBtnStyle" android:text="4" android:id="@+id/btn4" />
-            <Button style="@style/DigitBtnStyle" android:text="5" android:id="@+id/btn5" />
-            <Button style="@style/DigitBtnStyle" android:text="6" android:id="@+id/btn6" />
+            android:layout_height="match_parent">
 
             <Button
-                android:text="-"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn4"
+                style="@style/DigitBtnStyle"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/btn5"
+                style="@style/DigitBtnStyle"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/btn6"
+                style="@style/DigitBtnStyle"
+                android:text="6" />
+
+            <Button
                 android:id="@+id/btnMoins"
-                android:onClick="setOperator" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setOperator"
+                android:text="-" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <Button style="@style/DigitBtnStyle" android:text="1" android:id="@+id/btn1" />
-            <Button style="@style/DigitBtnStyle" android:text="2" android:id="@+id/btn2" />
-            <Button style="@style/DigitBtnStyle" android:text="3" android:id="@+id/btn3" />
+            android:layout_height="match_parent">
 
             <Button
-                android:text="*"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn1"
+                style="@style/DigitBtnStyle"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/btn2"
+                style="@style/DigitBtnStyle"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/btn3"
+                style="@style/DigitBtnStyle"
+                android:text="3" />
+
+            <Button
                 android:id="@+id/btnFois"
-                android:onClick="setOperator" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setOperator"
+                android:text="*" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <Button
-                android:text="C"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnClear" />
-
-            <Button style="@style/DigitBtnStyle" android:text="0" android:id="@+id/btn0" />
+            android:layout_height="match_parent">
 
             <Button
-                android:text="="
+                android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnEgal" />
+                android:text="C" />
 
             <Button
-                android:text="/"
+                android:id="@+id/btn0"
+                style="@style/DigitBtnStyle"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/btnEgal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="=" />
+
+            <Button
                 android:id="@+id/btnDiv"
-                android:onClick="setOperator" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setOperator"
+                android:text="/" />
         </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
