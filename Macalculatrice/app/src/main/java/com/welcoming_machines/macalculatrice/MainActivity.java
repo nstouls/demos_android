@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
                 compute();
             }
         });
+
+        Button btnClear = (Button)findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clear();
+            }
+        });
     }
 
     private void updateDisplay() {
@@ -71,6 +79,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void clear() {
+        op1 = 0;
+        op2 = 0;
+        operator = null;
+        isOp1 = true;
+        updateDisplay();
+    }
 
     public void setOperator(View v) {
         switch (v.getId()) {
