@@ -89,6 +89,12 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+            <Button
+                android:text="C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnClear" />
+
             <Button style="@style/DigitBtnStyle" android:text="0" android:id="@+id/btn0" />
 
             <Button
@@ -103,12 +109,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnDiv"
                 android:onClick="setOperator" />
-
-            <Button
-                android:text="C"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnClear" />
         </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
