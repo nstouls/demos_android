@@ -5,4 +5,4 @@
 
 Here is the appearence of the activity (thx to @mlr46):
 
-![Appearence of the Calculator](/Appearence.png)
+![Appearence of the Calculator](./Appearence.png)
